@@ -31,7 +31,7 @@ class jogador2(pygame.sprite.Sprite):
 
     def __init__(self, colum, row,  block):
 
-        imagem = os.path.join('Imagem', 'm.png')
+        imagem = os.path.join('Imagem', 'mece.png')
         print(imagem)
         try:  # Importanto a imagem
             player2Img = pygame.image.load(imagem)  # do jogador 2
@@ -82,8 +82,8 @@ def main():  # main routine
     deltaV_pos = 1
 
     p1 = jogador1(posX, posY, 'block')
-    p2 = jogador2(posX*2, posY*2, 'block')
-    jabulani = bola(0, 0, 'block')
+    p2 = jogador2(posX*3, posY, 'block')
+    jabulani = bola(displayX/2, displayY/2, 'block')
 
     while True:
         surf.fill(grey)
