@@ -2,11 +2,41 @@ import sys
 
 import os
 
-import place as place
+#import place as place
 import pygame
+
+from pygame.locals import *
 
 grey = (127, 127, 127)
 
+# setting the background
+#background = pygame.image.load('fundo.PNG')
+# class Background(pygame.sprite.Sprite):
+#
+#     def __init__(self, image_file, location):
+#         imagem = os.path.join('Imagem', 'fundo.PNG')
+#         print(imagem)
+#         try:  # Importanto a imagem
+#             background = pygame.image.load(imagem)  # do jogador 1
+#         except pygame.error:
+#             print("Erro ao carregar imagem do jogador")
+#
+#         pygame.sprite.Sprite.__init__(self)
+#
+#         self.image = background
+class Background(pygame.sprite.Sprite):
+    def __init__(self):
+
+        imagem = os.path.join('Imagem', 'fundo.PNG')
+        print(imagem)
+        try:  # Importanto a imagem
+            BackGround = pygame.image.load(imagem)  # do jogador 1
+        except pygame.error:
+            print("Erro ao carregar imagem do jogador")
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = BackGround
 
 class jogador1(pygame.sprite.Sprite):
 
@@ -67,10 +97,12 @@ class bola(pygame.sprite.Sprite):
 def main():  # main routine
     pygame.init()
 
-    displayX = 1280
-    displayY = 720
+    displayX = 1336
+    displayY = 752
 
     surf = pygame.display.set_mode([displayX, displayY])
+
+    BackGround = Background()
 
     pygame.display.update()
 
@@ -86,7 +118,9 @@ def main():  # main routine
     jabulani = bola(displayX/2, displayY/2, 'block')
 
     while True:
-        surf.fill(grey)
+        surf.fill([255, 255, 255])
+        surf.blit(BackGround.image, [0, 0])
+
         delta_time = clock.tick(144)
 
         events = pygame.event.get()
@@ -101,17 +135,17 @@ def main():  # main routine
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_a:
                     p1.posY -= deltaH_pos              
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_d:
                     p1.posX += deltaH_pos              
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_LEFT:
                     p2.posY -= deltaH_pos              
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_d:
-                    p2.posX += deltaH_pos              
+                if event.key == pygame.K_RIGHT:
+                    p2.posX += deltaH_pos
 
         pygame.draw.circle(surf, [0, 0, 255], [posY, posX], 50)  # update da posicao do ciruclo
 
