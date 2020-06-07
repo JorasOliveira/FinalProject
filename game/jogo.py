@@ -27,41 +27,41 @@ class jogador1(pygame.sprite.Sprite):
         self.blocks = block
 
 
-# class jogador2(pygame.sprite.Sprite):
-#
-#     def __init__(self, colum, row,  block):
-#
-#         imagem = os.path.join('Imagem', 'mece.pgn')
-#         print(imagem)
-#         try:  # Importanto a imagem
-#             player2Img = pygame.image.load(imagem)  # do jogador 2
-#         except pygame.error:
-#             print("Erro ao carregar imagem do jogador")
-#
-#         pygame.sprite.Sprite.__init__(self)
-#
-#         self.image = player2Img
-#         self.posX = colum
-#         self.posY = row
-#         self.blocks = block
+class jogador2(pygame.sprite.Sprite):
 
-# class bola(pygame.sprite.Sprite):
-#
-#     def __init__(self,  colum, row, block):
-#
-#         imagem = os.path.join('Imagem', 'jabulani')
-#         print(imagem)
-#         try:  # Importanto a imagem
-#             ball = pygame.image.load(imagem)  # do jogador 1
-#         except pygame.error:
-#             print("Erro ao carregar imagem do jogador")
-#
-#         pygame.sprite.Sprite.__init__(self)
-#
-#         self.image = ball
-#         self.posX = colum
-#         self.posY = row
-#         self.blocks = block
+    def __init__(self, colum, row,  block):
+
+        imagem = os.path.join('Imagem', 'm.png')
+        print(imagem)
+        try:  # Importanto a imagem
+            player2Img = pygame.image.load(imagem)  # do jogador 2
+        except pygame.error:
+            print("Erro ao carregar imagem do jogador")
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = player2Img
+        self.posX = colum
+        self.posY = row
+        self.blocks = block
+
+class bola(pygame.sprite.Sprite):
+
+    def __init__(self,  colum, row, block):
+
+        imagem = os.path.join('Imagem', 'jabulani.png')
+        print(imagem)
+        try:  # Importanto a imagem
+            ball = pygame.image.load(imagem)  # do jogador 1
+        except pygame.error:
+            print("Erro ao carregar imagem do jogador")
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = ball
+        self.posX = colum
+        self.posY = row
+        self.blocks = block
 
 
 def main():  # main routine
@@ -82,8 +82,8 @@ def main():  # main routine
     deltaV_pos = 1
 
     p1 = jogador1(posX, posY, 'block')
-    # p2 = jogador2(700, 700, 'block')
-    # jabulani = bola(0, 0, 'block')
+    p2 = jogador2(posX*2, posY*2, 'block')
+    jabulani = bola(0, 0, 'block')
 
     while True:
         surf.fill(grey)
@@ -92,8 +92,8 @@ def main():  # main routine
         events = pygame.event.get()
 
         surf.blit(p1.image, [p1.posX, p1.posY])
-        # surf.bli(p2.image, [p2.posX, p2.posY])
-        # surf.blit(jabulani.image, [jabulani.posX, jabulani.posY])
+        surf.blit(p2.image, [p2.posX, p2.posY])
+        surf.blit(jabulani.image, [jabulani.posX, jabulani.posY])
 
         for event in events:
             print(events)
