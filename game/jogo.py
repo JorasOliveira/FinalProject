@@ -97,9 +97,21 @@ def main():  # main routine
 
         for event in events:
             print(events)
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    p1.posY -= deltaH_pos              
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    p1.posX += deltaH_pos              
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    p2.posY -= deltaH_pos              
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_d:
+                    p2.posX += deltaH_pos              
 
         pygame.draw.circle(surf, [0, 0, 255], [posY, posX], 50)  # update da posicao do ciruclo
 
