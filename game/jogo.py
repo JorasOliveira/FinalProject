@@ -6,7 +6,10 @@ import os
 
 import pygame
 
+black = (0, 0, 0)
 grey = (127, 127, 127)
+white = (255, 255, 255)
+yellow = (255, 255, 0)
 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
@@ -39,7 +42,7 @@ class jogador1(pygame.sprite.Sprite):
         self.posX = colum
         self.posY = row
         self.blocks = block
-
+        self.score = 0
 
 class jogador2(pygame.sprite.Sprite):
 
@@ -58,6 +61,7 @@ class jogador2(pygame.sprite.Sprite):
         self.posX = colum
         self.posY = row
         self.blocks = block
+        self.score = 0
 
 class bola(pygame.sprite.Sprite):
 
@@ -103,6 +107,8 @@ def main():  # main routine
 
     pygame.display.update()
 
+    font = pygame.font.Font(pygame.font.get_default_font(), 35)
+
     clock = pygame.time.Clock()
 
     posY = int(displayY / 4)
@@ -115,8 +121,11 @@ def main():  # main routine
     jabulani = bola(displayX/2, displayY/2, 'block')
     cancha = campo()
 
+    PlacarEsquerda = p1.score
+    PlacarDireita = p2.score
+
     while True:
-        surf.fill([255, 255, 255])
+        surf.fill(white)
         surf.blit(BackGround.image, [0, 0])
 
         delta_time = clock.tick(144)
@@ -130,7 +139,8 @@ def main():  # main routine
 
         for event in events:
             print(events)
-            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE \
+                or p1.score == 7 or p2.score == 7:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
@@ -146,10 +156,13 @@ def main():  # main routine
                 if event.key == pygame.K_RIGHT:
                     p2.posX += deltaH_pos
 
-
+        #Adicionando os placares:
+        TextoEsquerda = font.render("Ribamar: {0}".format(PlacarEsquerda), True, yellow)
+        TextoDireita = font.render("Messi Careca: {0}".format(PlacarDireita), True, yellow)
+        surf.blit(TextoEsquerda, (10, 0))
+        surf.blit(TextoDireita, (1045, 0))
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
-
 
 
 
