@@ -3,27 +3,11 @@ import sys
 import os
 
 #import place as place
-import pygame
 
-from pygame.locals import *
+import pygame
 
 grey = (127, 127, 127)
 
-# setting the background
-#background = pygame.image.load('fundo.PNG')
-# class Background(pygame.sprite.Sprite):
-#
-#     def __init__(self, image_file, location):
-#         imagem = os.path.join('Imagem', 'fundo.PNG')
-#         print(imagem)
-#         try:  # Importanto a imagem
-#             background = pygame.image.load(imagem)  # do jogador 1
-#         except pygame.error:
-#             print("Erro ao carregar imagem do jogador")
-#
-#         pygame.sprite.Sprite.__init__(self)
-#
-#         self.image = background
 class Background(pygame.sprite.Sprite):
     def __init__(self):
 
@@ -147,24 +131,7 @@ def main():  # main routine
                 if event.key == pygame.K_RIGHT:
                     p2.posX += deltaH_pos
 
-        pygame.draw.circle(surf, [0, 0, 255], [posY, posX], 50)  # update da posicao do ciruclo
 
-        # descobre aonde o circulo esta  e decide qual movimento deve fazer
-
-        if posY <= 50:
-            deltaH_pos = 1
-
-        if posY >= displayY - 100:
-            deltaH_pos = -1
-
-        if posX <= 50:
-            deltaV_pos = 1
-
-        if posX >= displayX - 100:
-            deltaV_pos = -1
-
-        posY += deltaH_pos
-        posX += deltaV_pos
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
