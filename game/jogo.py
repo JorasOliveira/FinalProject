@@ -2,11 +2,12 @@ import sys
 
 import os
 
-#import place as place
+# import place as place
 
 import pygame
 
-grey = (127, 127, 127)
+gravity = 3.5
+
 
 class Background(pygame.sprite.Sprite):
     def __init__(self):
@@ -22,9 +23,9 @@ class Background(pygame.sprite.Sprite):
 
         self.image = BackGround
 
-class jogador1(pygame.sprite.Sprite):
 
-    def __init__(self, colum, row, block):
+class jogador1(pygame.sprite.Sprite):
+    def __init__(self, column, row, block):
 
         imagem = os.path.join('Imagem', 'ribamar.png')
         print(imagem)
@@ -36,14 +37,16 @@ class jogador1(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = player1Img
-        self.posX = colum
-        self.posY = row
+
         self.blocks = block
+        self.rect = self.image.get_rect()
+
+        self.rect.x = column
+        self.rect.bottom = row
 
 
 class jogador2(pygame.sprite.Sprite):
-
-    def __init__(self, colum, row,  block):
+    def __init__(self, colum, row, block):
 
         imagem = os.path.join('Imagem', 'mece.png')
         print(imagem)
@@ -55,13 +58,16 @@ class jogador2(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = player2Img
-        self.posX = colum
-        self.posY = row
+
         self.blocks = block
+        self.rect = self.image.get_rect()
+
+        self.rect.x = colum
+        self.rect.bottom = row
+
 
 class bola(pygame.sprite.Sprite):
-
-    def __init__(self,  colum, row, block):
+    def __init__(self, colum, row, block):
 
         imagem = os.path.join('Imagem', 'jabulani.png')
         print(imagem)
@@ -73,9 +79,11 @@ class bola(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = ball
-        self.posX = colum
-        self.posY = row
         self.blocks = block
+        self.rect = self.image.get_rect()
+
+        self.rect.x = colum
+        self.rect.y = row
 
 
 def main():  # main routine
@@ -94,12 +102,12 @@ def main():  # main routine
 
     posY = int(displayY / 4)
     posX = int(displayX / 4)
-    deltaH_pos = 1
-    deltaV_pos = 1
+    deltaPosX = 5
+    deltaPosY= 10
 
     p1 = jogador1(posX, posY, 'block')
-    p2 = jogador2(posX*3, posY, 'block')
-    jabulani = bola(displayX/2, displayY/2, 'block')
+    p2 = jogador2(posX * 3, posY, 'block')
+    jabulani = bola(displayX / 2, displayY / 2, 'block')
 
     while True:
         surf.fill([255, 255, 255])
@@ -109,9 +117,9 @@ def main():  # main routine
 
         events = pygame.event.get()
 
-        surf.blit(p1.image, [p1.posX, p1.posY])
-        surf.blit(p2.image, [p2.posX, p2.posY])
-        surf.blit(jabulani.image, [jabulani.posX, jabulani.posY])
+        surf.blit(p1.image, p1.rect)
+        surf.blit(p2.image, p2.rect)
+        surf.blit(jabulani.image, jabulani.rect)
 
         for event in events:
             print(events)
@@ -120,19 +128,20 @@ def main():  # main routine
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
-                    p1.posX -= deltaH_pos              
-            if event.type == pygame.KEYDOWN:
+                    p1.rect.x -= deltaPosX
                 if event.key == pygame.K_d:
-                    p1.posX += deltaH_pos              
-            if event.type == pygame.KEYDOWN:
+                    p1.rect.x += deltaPosX
                 if event.key == pygame.K_LEFT:
-                    p2.posX -= deltaH_pos              
-            if event.type == pygame.KEYDOWN:
+                    p2.rect.x -= deltaPosX
                 if event.key == pygame.K_RIGHT:
-                    p2.posX += deltaH_pos
+                    p2.rect.x += deltaPosX
+                if event.key == pygame.K_w:
+                    p1.rect.y += deltaPosY
+                if event.key == pygame.K_UP:
+                    p2.rect.y += deltaPosY
 
-
-
+        p1.rect.y += gravity
+        p2.rect.y += gravity
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
 
