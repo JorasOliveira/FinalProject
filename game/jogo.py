@@ -77,6 +77,19 @@ class bola(pygame.sprite.Sprite):
         self.posY = row
         self.blocks = block
 
+class campo(pygame.sprite.Sprite):
+    def __init__(self):
+
+        imgfield = os.path.join('Imagem', 'field.png')
+        print(imgfield)
+        try:
+            pitch = pygame.image.load(imgfield)  #Campo
+        except pygame.error:
+            print("Erro")
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.imgfield = pitch
 
 def main():  # main routine
     pygame.init()
@@ -100,6 +113,7 @@ def main():  # main routine
     p1 = jogador1(posX, posY, 'block')
     p2 = jogador2(posX*3, posY, 'block')
     jabulani = bola(displayX/2, displayY/2, 'block')
+    cancha = campo()
 
     while True:
         surf.fill([255, 255, 255])
@@ -111,6 +125,7 @@ def main():  # main routine
 
         surf.blit(p1.image, [p1.posX, p1.posY])
         surf.blit(p2.image, [p2.posX, p2.posY])
+        surf.blit(cancha.imgfield, [0,672])
         surf.blit(jabulani.image, [jabulani.posX, jabulani.posY])
 
         for event in events:
@@ -134,6 +149,8 @@ def main():  # main routine
 
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
+
+
 
 
 if __name__ == '__main__':
