@@ -141,6 +141,7 @@ def main():  # main routine
                     p1.posX += deltaH_pos
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
+                    p2.posX -= deltaH_pos
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     p2.posX += deltaH_pos
