@@ -164,19 +164,21 @@ def main():  # main routine
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    p1.rect.x -= deltaPosX
-                if event.key == pygame.K_d:
-                    p1.rect.x += deltaPosX
-                if event.key == pygame.K_LEFT:
-                    p2.rect.x -= deltaPosX
-                if event.key == pygame.K_RIGHT:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_a:
+                        p1.rect.x -= deltaPosX
+                    if event.key == pygame.K_d:
+                        p1.rect.x += deltaPosX
+                    if event.key == pygame.K_LEFT:
+                        p2.rect.x -= deltaPosX
+                    if event.key == pygame.K_RIGHT:
+                        p2.rect.x += deltaPosX
+                    if event.key == pygame.K_w:
+                        p1.rect.y += deltaPosY
+                    if event.key == pygame.K_UP:
+                        p2.rect.y += deltaPosY
 
-                    p2.rect.x += deltaPosX
-                if event.key == pygame.K_w:
-                    p1.rect.y += deltaPosY
-                if event.key == pygame.K_UP:
-                    p2.rect.y += deltaPosY
+
         p1.rect.y += gravity
         p2.rect.y += gravity
 
@@ -188,8 +190,5 @@ def main():  # main routine
         surf.blit(TextoEsquerda, (10, 0))
         surf.blit(TextoDireita, (1045, 0))
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
-
-
-
 if __name__ == '__main__':
     main()
