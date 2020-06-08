@@ -120,13 +120,13 @@ def main():  # main routine
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
-                    p1.posY -= deltaH_pos              
+                    p1.posX -= deltaH_pos              
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_d:
                     p1.posX += deltaH_pos              
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    p2.posY -= deltaH_pos              
+                    p2.posX -= deltaH_pos              
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     p2.posX += deltaH_pos
