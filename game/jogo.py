@@ -112,6 +112,34 @@ class campo(pygame.sprite.Sprite):
 
         self.imgfield = pitch
 
+class golesquerdo(pygame.sprite.Sprite):
+    def __init__(self):
+ 
+        imggol1 = os.path.join('Imagem, gol-esq')
+        print(imggol1)
+        try:
+            g_esq = pygame.image.load(imggol1) #Gol esquerdo
+        except pygame.error:
+            print("Erro")
+        
+        pygame.sprite.Sprite.__init__(self)
+ 
+        self.imggol1 = g_esq
+ 
+class goldireito(pygame.sprite.Sprite):
+    def __init__(self):
+ 
+        imggol2 = os.path.join('Imagem, gol-dir')
+        print(imggol2)
+        try:
+            g_dir = pygame.image.load(imggol2) #Gol esquerdo
+        except pygame.error:
+            print("Erro")
+        
+        pygame.sprite.Sprite.__init__(self)
+ 
+        self.imggol2 = g_dir
+
 def main():  # main routine
     pygame.init()
 
