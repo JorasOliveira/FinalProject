@@ -115,7 +115,7 @@ class campo(pygame.sprite.Sprite):
 class golesquerdo(pygame.sprite.Sprite):
     def __init__(self):
  
-        imggol1 = os.path.join('Imagem, gol-esq')
+        imggol1 = os.path.join('Imagem, gol-esq.png')
         print(imggol1)
         try:
             g_esq = pygame.image.load(imggol1) #Gol esquerdo
@@ -129,7 +129,7 @@ class golesquerdo(pygame.sprite.Sprite):
 class goldireito(pygame.sprite.Sprite):
     def __init__(self):
  
-        imggol2 = os.path.join('Imagem, gol-dir')
+        imggol2 = os.path.join('Imagem, gol-dir.png')
         print(imggol2)
         try:
             g_dir = pygame.image.load(imggol2) #Gol esquerdo
@@ -165,6 +165,8 @@ def main():  # main routine
     p2 = jogador2(posX*3, posY, 'block')
     jabulani = bola(displayX/2, displayY/2, 'block')
     cancha = campo()
+    #gol_esq = golesquerdo()         -> CONSERTAR
+    #gol_dir = goldireito()         -> CONSERTAR
 
     PlacarEsquerda = p1.score
     PlacarDireita = p2.score
@@ -183,6 +185,8 @@ def main():  # main routine
         surf.blit(p2.image, p2.rect)
         surf.blit(jabulani.image, jabulani.rect)
         surf.blit(cancha.imgfield, [0,672])
+        #surf.blit(gol_esq.imggol1, [100,100])          -> CONSERTAR
+        #surf.blit(gol_dir.imggol2, [100,100])          -> CONSERTAR
 
 
         for event in events:
