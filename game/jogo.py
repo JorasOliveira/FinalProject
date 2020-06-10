@@ -162,8 +162,8 @@ class Endscreen(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'endscreen.png')
         print(imagem)
-        try:  # Importanto a imagem
-            EndScreen = pygame.image.load(imagem)  # do jogador 1
+        try:                                       # Importanto a imagem
+            EndScreen = pygame.image.load(imagem)  # do endscreen
         except pygame.error:
             print("Erro ao carregar imagem final")
             sys.exit()
@@ -290,8 +290,9 @@ def main():  # main routine
             surf.blit(textoEsquerda, (10, 0))
             surf.blit(textoDireita, (1045, 0))
 
-        if p1.score == 7 or p2.score == 7:
-            pygame.draw.rect(surf, black, [1072, 603, 1072, 603])
+            if p1.score == 7 or p2.score == 7:
+                surf.fill(black)
+                surf.blit(endScreen.image, [displayX / 5, displayY / 5])
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
