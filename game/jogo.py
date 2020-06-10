@@ -8,10 +8,6 @@ import pygame
 
 gravity = 3.5
 
-"""sompulo = os.path.join('Som', 'pulo.WAV') #som do pulo
-somgol = os.path.join('Som', 'Goal.WAV') #som do gol
-somchute = os.path.join('Som', 'Ballkick.WAV') #som do chute"""
-
 black = (0, 0, 0)
 grey = (127, 127, 127)
 white = (255, 255, 255)
@@ -76,6 +72,7 @@ class Jogador2(pygame.sprite.Sprite):
     def __init__(self, colum, row, block):
 
         imagem = os.path.join('Imagem', 'mece.png')
+        
         print(imagem)
         try:                                        # Importanto a imagem
             player2Img = pygame.image.load(imagem)  # do jogador 2
@@ -133,6 +130,7 @@ class GolEsquerdo(pygame.sprite.Sprite):
     def __init__(self):
 
         imggol1 = os.path.join('Imagem', 'gol-esq.png')
+
         print(imggol1)
         try:
             g_esq = pygame.image.load(imggol1)  # Gol esquerdo
@@ -149,6 +147,7 @@ class GolDireito(pygame.sprite.Sprite):
     def __init__(self):
 
         imggol2 = os.path.join('Imagem', 'gol-dir.png')
+
         print(imggol2)
         try:
             g_dir = pygame.image.load(imggol2)  # Gol direito
@@ -212,9 +211,18 @@ def main():  # main routine
     golDir = GolDireito()
     
     torcida = os.path.join('Som', 'Torcida.ogg') #Som ambiente de torcida
-    pygame.mixer.music.load(torcida)
-    pygame.mixer.music.set_volume(0.1)
-    pygame.mixer.music.play(-1)
+    pygame.mixer.music.load(torcida) #Carrega som
+    pygame.mixer.music.set_volume(0.1) #Volume
+    pygame.mixer.music.play(-1) #Toca som
+
+    """sompulo = os.path.join('Som', 'pulo.WAV') #som do pulo
+    pulo = pygame.mixer.music.load(sompulo) #carrega som
+    somchute = os.path.join('Som', 'Ballkick.WAV') #som do chute
+    chute = pygame.mixer.music.load(somchute) #carrega som
+    sompulo = os.path.join('Som', 'pulo.WAV') #som do pulo
+    pulo = pygame.mixer.music.load(sompulo) #carrega som
+    somchute = os.path.join('Som', 'Ballkick.WAV') #som do chute
+    chute = pygame.mixer.music.load(somchute) #carrega som"""""
 
     placarEsquerda = p1.score
     placarDireita = p2.score
