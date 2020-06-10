@@ -8,6 +8,10 @@ import pygame
 
 gravity = 3.5
 
+"""sompulo = os.path.join('Som', 'pulo.WAV') #som do pulo
+somgol = os.path.join('Som', 'Goal.WAV') #som do gol
+somchute = os.path.join('Som', 'Ballkick.WAV') #som do chute"""
+
 black = (0, 0, 0)
 grey = (127, 127, 127)
 white = (255, 255, 255)
@@ -203,6 +207,11 @@ def main():  # main routine
     cancha = Campo()
     golEsq = GolEsquerdo()
     golDir = GolDireito()
+    
+    torcida = os.path.join('Som', 'Torcida.ogg') #Som ambiente de torcida
+    pygame.mixer.music.load(torcida)
+    pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.play(-1)
 
     placarEsquerda = p1.score
     placarDireita = p2.score
