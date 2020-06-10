@@ -14,13 +14,12 @@ white = (255, 255, 255)
 yellow = (255, 255, 0)
 blue = (0, 0, 255)
 
-
 class Background(pygame.sprite.Sprite):
     def __init__(self):
 
         imagem = os.path.join('Imagem', 'fundo.PNG')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                        # Importanto a imagem
             BackGround = pygame.image.load(imagem)  # do jogador 1
         except pygame.error:
             print("Erro ao carregar imagem de fundo")
@@ -36,8 +35,8 @@ class Startscreen(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'startscreen.png')
         print(imagem)
-        try:  # Importanto a imagem
-            StartScreen = pygame.image.load(imagem)  # do jogador 1
+        try:                                         # Importanto a imagem
+            StartScreen = pygame.image.load(imagem)  # da Tela Inicial
         except pygame.error:
             print("Erro ao carregar imagem inicial")
             sys.exit()
@@ -47,12 +46,12 @@ class Startscreen(pygame.sprite.Sprite):
         self.image = StartScreen
 
 
-class jogador1(pygame.sprite.Sprite):
+class Jogador1(pygame.sprite.Sprite):
     def __init__(self, column, row, block):
 
         imagem = os.path.join('Imagem', 'ribamar.png')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                        # Importanto a imagem
             player1Img = pygame.image.load(imagem)  # do jogador 1
         except pygame.error:
             print("Erro ao carregar imagem do jogador 1")
@@ -68,12 +67,12 @@ class jogador1(pygame.sprite.Sprite):
         self.score = 0
 
 
-class jogador2(pygame.sprite.Sprite):
+class Jogador2(pygame.sprite.Sprite):
     def __init__(self, colum, row, block):
 
         imagem = os.path.join('Imagem', 'mece.png')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                        # Importanto a imagem
             player2Img = pygame.image.load(imagem)  # do jogador 2
         except pygame.error:
             print("Erro ao carregar imagem do jogador 2")
@@ -89,13 +88,13 @@ class jogador2(pygame.sprite.Sprite):
         self.rect.bottom = row
 
 
-class bola(pygame.sprite.Sprite):
+class Bola(pygame.sprite.Sprite):
     def __init__(self, colum, row, block):
 
         imagem = os.path.join('Imagem', 'jabulani.png')
         print(imagem)
-        try:  # Importanto a imagem
-            ball = pygame.image.load(imagem)  # do jogador 1
+        try:                                  # Importanto a imagem
+            ball = pygame.image.load(imagem)  # da bola
         except pygame.error:
             print("Erro ao carregar a bola")
             sys.exit()
@@ -109,7 +108,7 @@ class bola(pygame.sprite.Sprite):
         self.rect.y = row
 
 
-class campo(pygame.sprite.Sprite):
+class Campo(pygame.sprite.Sprite):
     def __init__(self):
 
         imgfield = os.path.join('Imagem', 'field.png')
@@ -156,6 +155,20 @@ class GolDireito(pygame.sprite.Sprite):
 
         self.image = g_dir
 
+class Endscreen(pygame.sprite.Sprite):
+    def __init__(self):
+
+        imagem = os.path.join('Imagem', 'endscreen.png')
+        print(imagem)
+        try:  # Importanto a imagem
+            EndScreen = pygame.image.load(imagem)  # do jogador 1
+        except pygame.error:
+            print("Erro ao carregar imagem final")
+            sys.exit()
+
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = EndScreen
 
 def main():  # main routine
     pygame.init()
@@ -167,7 +180,9 @@ def main():  # main routine
 
     backGround = Background()
 
-    StartScreen = Startscreen()
+    startScreen = Startscreen()
+
+    endScreen = Endscreen()
 
     start = True
 
@@ -200,9 +215,6 @@ def main():  # main routine
         events = pygame.event.get()
 
         for event in events:
-            print(events)
-
-        for event in events:
 
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pygame.quit()
@@ -210,21 +222,15 @@ def main():  # main routine
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 start = False
 
-            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE \
-                    or p1.score == 7 or p2.score == 7:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
-
             if event.type == pygame.KEYDOWN:
-
                 if event.type == pygame.KEYDOWN:
-
                     if event.key == pygame.K_a:
                         p1.rect.x -= deltaPosX
-
                     if event.key == pygame.K_d:
                         p1.rect.x += deltaPosX
-
                     if event.key == pygame.K_LEFT:
                         p2.rect.x -= deltaPosX
 
@@ -245,7 +251,8 @@ def main():  # main routine
 
             surf.blit(p1.image, p1.rect)
             surf.blit(p2.image, p2.rect)
-            surf.blit(StartScreen.image, [displayX / 10, displayY / 10])
+            surf.blit(jabulani.image, jabulani.rect)
+            surf.blit(startScreen.image, [displayX / 10, displayY / 10])
 
         else:
 
@@ -280,14 +287,10 @@ def main():  # main routine
             surf.blit(textoEsquerda, (10, 0))
             surf.blit(textoDireita, (1045, 0))
 
-        # # Adicionando os placares:
-        # textoEsquerda = font.render("Ribamar: {0}".format(placarEsquerda), True, yellow)
-        # textoDireita = font.render("Messi Careca: {0}".format(placarDireita), True, yellow)
-        # surf.blit(textoEsquerda, (10, 0))
-        # surf.blit(textoDireita, (1045, 0))
+        if p1.score == 7 or p2.score == 7:
+            pygame.draw.rect(surf, black, [1072, 603, 1072, 603])
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
-
 
 if __name__ == '__main__':
     main()
