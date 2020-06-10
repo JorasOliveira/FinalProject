@@ -6,8 +6,10 @@ import os
 
 import pygame
 
+# Criando a gravidade
 gravity = 3.5
 
+# Definindo algumas cores
 black = (0, 0, 0)
 grey = (127, 127, 127)
 white = (255, 255, 255)
@@ -21,7 +23,7 @@ class Background(pygame.sprite.Sprite):
         imagem = os.path.join('Imagem', 'fundo.PNG')
         print(imagem)
         try:                                        # Importanto a imagem
-            BackGround = pygame.image.load(imagem)  # do jogador 1
+            BackGround = pygame.image.load(imagem)  # da tela de fundo
         except pygame.error:
             print("Erro ao carregar imagem de fundo")
             sys.exit()
@@ -87,7 +89,7 @@ class Jogador2(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = colum
         self.rect.bottom = row
-        self.score = 7
+        self.score = 0
 
 class Bola(pygame.sprite.Sprite):
     def __init__(self, colum, row, block):
@@ -114,8 +116,8 @@ class Campo(pygame.sprite.Sprite):
 
         imgfield = os.path.join('Imagem', 'field.png')
         print(imgfield)
-        try:
-            pitch = pygame.image.load(imgfield)  # Campo
+        try:                                     # Importando a imagem
+            pitch = pygame.image.load(imgfield)  # do campo
         except pygame.error:
             print("Erro ao carregar o campo")
             sys.exit()
@@ -131,8 +133,8 @@ class GolEsquerdo(pygame.sprite.Sprite):
         imggol1 = os.path.join('Imagem', 'gol-esq.png')
 
         print(imggol1)
-        try:
-            g_esq = pygame.image.load(imggol1)  # Gol esquerdo
+        try:                                    # Importando a imagem
+            g_esq = pygame.image.load(imggol1)  # do gol esquerdo
         except pygame.error:
             print("Erro ao carregar imagem do gol esquerdo")
             sys.exit()
@@ -148,8 +150,8 @@ class GolDireito(pygame.sprite.Sprite):
         imggol2 = os.path.join('Imagem', 'gol-dir.png')
 
         print(imggol2)
-        try:
-            g_dir = pygame.image.load(imggol2)  # Gol direito
+        try:                                    # Impotando a imagem
+            g_dir = pygame.image.load(imggol2)  # do gol direito
         except pygame.error:
             print("Erro ao carregar imagem do gol direito")
             sys.exit()
@@ -165,7 +167,7 @@ class Endscreen(pygame.sprite.Sprite):
         imagem = os.path.join('Imagem', 'endscreen.png')
         print(imagem)
         try:                                       # Importanto a imagem
-            EndScreen = pygame.image.load(imagem)  # do endscreen
+            EndScreen = pygame.image.load(imagem)  # da endscreen
         except pygame.error:
             print("Erro ao carregar imagem final")
             sys.exit()
@@ -234,6 +236,7 @@ def main():  # main routine
 
         events = pygame.event.get()
 
+        # Editando as teclas do teclado para dar para jogar:
         for event in events:
 
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -266,6 +269,7 @@ def main():  # main routine
             # p2.rect.y += gravity
             # jabulani.rect.y += gravity
 
+        # Adicionando a tela inicial e fazendo o jogo rodar:
         if start:
 
             surf.blit(p1.image, p1.rect)
@@ -291,6 +295,7 @@ def main():  # main routine
 
             # p2.posX += deltaH_pos
 
+            # Adicionando as imagens do jogo
             surf.blit(backGround.image, [0, 0])
             surf.blit(p1.image, p1.rect)
             surf.blit(p2.image, p2.rect)
@@ -305,6 +310,7 @@ def main():  # main routine
             surf.blit(textoEsquerda, (10, 0))
             surf.blit(textoDireita, (1045, 0))
 
+            # Adicionando a tela final do jogo:
             if p1.score == 7:
                 surf.fill(black)
                 surf.blit(endScreen.image, [displayX / 5, displayY / 5])
