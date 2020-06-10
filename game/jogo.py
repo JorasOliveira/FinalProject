@@ -150,12 +150,10 @@ def main():  # main routine
 
         events = pygame.event.get()
 
-
         surf.blit(p1.image, p1.rect)
         surf.blit(p2.image, p2.rect)
         surf.blit(jabulani.image, jabulani.rect)
         surf.blit(cancha.imgfield, [0,672])
-
 
         for event in events:
             print(events)
@@ -180,11 +178,13 @@ def main():  # main routine
 
 
         p1.rect.y += gravity
+
         p2.rect.y += gravity
 
         #p2.posX += deltaH_pos
 
         #Adicionando os placares:
+        
         TextoEsquerda = font.render("Ribamar: {0}".format(PlacarEsquerda), True, yellow)
         TextoDireita = font.render("Messi Careca: {0}".format(PlacarDireita), True, yellow)
         surf.blit(TextoEsquerda, (10, 0))
