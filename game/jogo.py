@@ -18,6 +18,7 @@ white = (255, 255, 255)
 yellow = (255, 255, 0)
 blue = (0, 0, 255)
 
+
 class Background(pygame.sprite.Sprite):
     def __init__(self):
 
@@ -159,13 +160,14 @@ class GolDireito(pygame.sprite.Sprite):
 
         self.image = g_dir
 
+
 class Endscreen(pygame.sprite.Sprite):
     def __init__(self):
 
         imagem = os.path.join('Imagem', 'endscreen.png')
         print(imagem)
-        try:  # Importanto a imagem
-            EndScreen = pygame.image.load(imagem)  # do jogador 1
+        try:                                       # Importanto a imagem
+            EndScreen = pygame.image.load(imagem)  # do endscreen
         except pygame.error:
             print("Erro ao carregar imagem final")
             sys.exit()
@@ -173,6 +175,7 @@ class Endscreen(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = EndScreen
+
 
 def main():  # main routine
     pygame.init()
@@ -197,12 +200,12 @@ def main():  # main routine
     clock = pygame.time.Clock()
 
     posY = int(displayY / 4)
-    posX = int(displayX / 4)
+    posX = int(displayX / 6)
     deltaPosX = 5
     deltaPosY = 50
 
     p1 = Jogador1(posX, posY, 'block')
-    p2 = Jogador2(posX * 3, posY, 'block')
+    p2 = Jogador2(1336 - 350, posY, 'block')
     jabulani = Bola(displayX / 2, displayY / 2, 'block')
     cancha = Campo()
     golEsq = GolEsquerdo()
@@ -296,10 +299,12 @@ def main():  # main routine
             surf.blit(textoEsquerda, (10, 0))
             surf.blit(textoDireita, (1045, 0))
 
-        if p1.score == 7 or p2.score == 7:
-            pygame.draw.rect(surf, black, [1072, 603, 1072, 603])
+            if p1.score == 7 or p2.score == 7:
+                surf.fill(black)
+                surf.blit(endScreen.image, [displayX / 5, displayY / 5])
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
+
 
 if __name__ == '__main__':
     main()
