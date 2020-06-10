@@ -85,10 +85,9 @@ class Jogador2(pygame.sprite.Sprite):
         self.image = player2Img
         self.blocks = block
         self.rect = self.image.get_rect()
-        self.score = 0
         self.rect.x = colum
         self.rect.bottom = row
-
+        self.score = 7
 
 class Bola(pygame.sprite.Sprite):
     def __init__(self, colum, row, block):
@@ -135,7 +134,7 @@ class GolEsquerdo(pygame.sprite.Sprite):
         try:
             g_esq = pygame.image.load(imggol1)  # Gol esquerdo
         except pygame.error:
-            print("Erro")
+            print("Erro ao carregar imagem do gol esquerdo")
             sys.exit()
 
         pygame.sprite.Sprite.__init__(self)
@@ -152,7 +151,7 @@ class GolDireito(pygame.sprite.Sprite):
         try:
             g_dir = pygame.image.load(imggol2)  # Gol direito
         except pygame.error:
-            print("Erro")
+            print("Erro ao carregar imagem do gol direito")
             sys.exit()
 
         pygame.sprite.Sprite.__init__(self)
@@ -194,7 +193,8 @@ def main():  # main routine
 
     pygame.display.update()
 
-    font = pygame.font.Font(pygame.font.get_default_font(), 35)
+    fontScore = pygame.font.Font(pygame.font.get_default_font(), 35)
+    fontInstructions = pygame.font.Font(pygame.font.get_default_font(), 20)
 
     clock = pygame.time.Clock()
 
@@ -246,22 +246,21 @@ def main():  # main routine
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_a:
-                        p1.rect.x -= deltaPosX
-                    if event.key == pygame.K_d:
-                        p1.rect.x += deltaPosX
-                    if event.key == pygame.K_LEFT:
-                        p2.rect.x -= deltaPosX
+                if event.key == pygame.K_a:
+                    p1.rect.x -= deltaPosX
+                if event.key == pygame.K_d:
+                    p1.rect.x += deltaPosX
+                if event.key == pygame.K_LEFT:
+                    p2.rect.x -= deltaPosX
 
-                    if event.key == pygame.K_RIGHT:
-                        p2.rect.x += deltaPosX
+                if event.key == pygame.K_RIGHT:
+                    p2.rect.x += deltaPosX
 
-                    if event.key == pygame.K_w:
-                        p1.rect.y -= deltaPosY
+                if event.key == pygame.K_w:
+                    p1.rect.y -= deltaPosY
 
-                    if event.key == pygame.K_UP:
-                        p2.rect.y -= deltaPosY
+                if event.key == pygame.K_UP:
+                    p2.rect.y -= deltaPosY
 
             # p1.rect.y += gravity
             # p2.rect.y += gravity
@@ -299,17 +298,35 @@ def main():  # main routine
             surf.blit(cancha.imgfield, [0, 672])
             surf.blit(golEsq.image, [0, 320])
             surf.blit(golDir.image, [1177, 320])
-            # print(events)
 
             # Adicionando os placares:
-            textoEsquerda = font.render("Ribamar: {0}".format(placarEsquerda), True, yellow)
-            textoDireita = font.render("Messi Careca: {0}".format(placarDireita), True, yellow)
+            textoEsquerda = fontScore.render("Ribamar: {0}".format(placarEsquerda), True, yellow)
+            textoDireita = fontScore.render("Messi Careca: {0}".format(placarDireita), True, yellow)
             surf.blit(textoEsquerda, (10, 0))
             surf.blit(textoDireita, (1045, 0))
 
-            if p1.score == 7 or p2.score == 7:
+            if p1.score == 7:
                 surf.fill(black)
                 surf.blit(endScreen.image, [displayX / 5, displayY / 5])
+                textoVencedor1 = fontInstructions.render("Jogador 1 venceu!", True, white)
+                textoInstrucoes1 = fontInstructions.render("Pressione 'Enter' para jogar novamente", True, white)
+                textoInstrucoes2 = fontInstructions.render("Pressione 'ESC' para sair", True, white)
+                surf.blit(p1.image, (displayX * 0.47, displayY / 3))
+                surf.blit(textoVencedor1, [displayX * 4 / 9, displayY / 3])
+                surf.blit(textoInstrucoes1, [displayX * 4 / 11, displayY * 3 / 5])
+                surf.blit(textoInstrucoes2, [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY  * 11 / 17])
+
+
+            if p2.score == 7:
+                surf.fill(black)
+                surf.blit(endScreen.image, [displayX / 5, displayY / 5])
+                textoVencedor1 = fontInstructions.render("Jogador 2 venceu!", True, white)
+                textoInstrucoes1 = fontInstructions.render("Pressione 'Enter' para jogar novamente", True, white)
+                textoInstrucoes2 = fontInstructions.render("Pressione 'ESC' para sair", True, white)
+                surf.blit(p2.image, (displayX * 0.47, displayY / 3))
+                surf.blit(textoVencedor1, [displayX * 4 / 9, displayY / 3])
+                surf.blit(textoInstrucoes1, [displayX * 4 / 11, displayY * 3 / 5])
+                surf.blit(textoInstrucoes2, [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY  * 11 / 17])
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
