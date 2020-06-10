@@ -197,10 +197,10 @@ def main():  # main routine
     deltaPosX = 5
     deltaPosY = 50
 
-    p1 = jogador1(posX, posY, 'block')
-    p2 = jogador2(posX * 3, posY, 'block')
-    jabulani = bola(displayX / 2, displayY / 2, 'block')
-    cancha = campo()
+    p1 = Jogador1(posX, posY, 'block')
+    p2 = Jogador2(posX * 3, posY, 'block')
+    jabulani = Bola(displayX / 2, displayY / 2, 'block')
+    cancha = Campo()
     golEsq = GolEsquerdo()
     golDir = GolDireito()
 
