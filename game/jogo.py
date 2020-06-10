@@ -14,6 +14,7 @@ white = (255, 255, 255)
 yellow = (255, 255, 0)
 blue = (0, 0, 255)
 
+
 class Background(pygame.sprite.Sprite):
     def __init__(self):
 
@@ -155,6 +156,7 @@ class GolDireito(pygame.sprite.Sprite):
 
         self.image = g_dir
 
+
 class Endscreen(pygame.sprite.Sprite):
     def __init__(self):
 
@@ -169,6 +171,7 @@ class Endscreen(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = EndScreen
+
 
 def main():  # main routine
     pygame.init()
@@ -193,14 +196,14 @@ def main():  # main routine
     clock = pygame.time.Clock()
 
     posY = int(displayY / 4)
-    posX = int(displayX / 4)
+    posX = int(displayX / 6)
     deltaPosX = 5
     deltaPosY = 50
 
-    p1 = jogador1(posX, posY, 'block')
-    p2 = jogador2(posX * 3, posY, 'block')
-    jabulani = bola(displayX / 2, displayY / 2, 'block')
-    cancha = campo()
+    p1 = Jogador1(posX, posY, 'block')
+    p2 = Jogador2(1336 - 350, posY, 'block')
+    jabulani = Bola(displayX / 2, displayY / 2, 'block')
+    cancha = Campo()
     golEsq = GolEsquerdo()
     golDir = GolDireito()
 
@@ -291,6 +294,7 @@ def main():  # main routine
             pygame.draw.rect(surf, black, [1072, 603, 1072, 603])
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
+
 
 if __name__ == '__main__':
     main()
