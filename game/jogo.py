@@ -261,19 +261,19 @@ def main():  # main routine
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
-                    deltaPosXp1 = -3.5
+                    deltaPosXp2 = -3.5
                     #p1.rect.x -= deltaPosX
 
                 if event.key == pygame.K_d:
-                    deltaPosXp1 = 3.5
+                    deltaPosXp2 = 3.5
                     #p1.rect.x += deltaPosX
 
                 if event.key == pygame.K_LEFT:
-                    deltaPosXp2 = -3.5
+                    deltaPosXp1 = -3.5
                     #p2.rect.x -= deltaPosX
 
                 if event.key == pygame.K_RIGHT:
-                    deltaPosXp2 = 3.5
+                    deltaPosXp1 = 3.5
                     #p2.rect.x += deltaPosX
 
                 if event.key == pygame.K_w:
@@ -284,13 +284,13 @@ def main():  # main routine
             
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
-                    deltaPosXp2 = 0
+                    deltaPosXp1 = 0
                 if event.key == pygame.K_LEFT:
-                    deltaPosXp2 = 0
+                    deltaPosXp1 = 0
                 if event.key == pygame.K_a:
-                    deltaPosXp1 = 0
+                    deltaPosXp2 = 0
                 if event.key == pygame.K_d:
-                    deltaPosXp1 = 0
+                    deltaPosXp2 = 0
             
 
             # p1.rect.y += gravity
