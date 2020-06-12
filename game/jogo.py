@@ -6,6 +6,7 @@ import os
 
 import pygame
 
+
 gravity = 3.5
 
 black = (0, 0, 0)
@@ -65,6 +66,7 @@ class Jogador1(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = column
         self.rect.bottom = row
+        self.mask = pygame.mask.from_surface(self.image)
         self.score = 0
 
 
@@ -84,9 +86,10 @@ class Jogador2(pygame.sprite.Sprite):
         self.image = player2Img
         self.blocks = block
         self.rect = self.image.get_rect()
-        self.score = 0
         self.rect.x = colum
         self.rect.bottom = row
+        self.mask = pygame.mask.from_surface(self.image)
+        self.score = 0
 
 
 class Bola(pygame.sprite.Sprite):
@@ -106,7 +109,8 @@ class Bola(pygame.sprite.Sprite):
         self.blocks = block
         self.rect = self.image.get_rect()
         self.rect.x = colum
-        self.rect.y = row
+        self.rect.bottom = row
+        self.mask = pygame.mask.from_surface(self.image)
 
 
 class Campo(pygame.sprite.Sprite):
@@ -122,7 +126,9 @@ class Campo(pygame.sprite.Sprite):
 
         pygame.sprite.Sprite.__init__(self)
 
-        self.imgfield = pitch
+        self.image = pitch
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
 
 
 class GolEsquerdo(pygame.sprite.Sprite):
@@ -139,6 +145,8 @@ class GolEsquerdo(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = g_esq
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
 
 
 class GolDireito(pygame.sprite.Sprite):
@@ -155,6 +163,8 @@ class GolDireito(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = g_dir
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
 
 
 class Endscreen(pygame.sprite.Sprite):
@@ -259,15 +269,16 @@ def main():  # main routine
 
         else:
 
-            if p1.rect.y == 672:
-                p1.rect.y = 0
 
-            if p2.rect.y == 672:
-                p2.rect.y = 0
 
-            if jabulani.rect.y == 672:
-                jabulani.rect.y = 0
-
+            # if p2.rect.y == 672:
+            #     p2.rect.y = 0
+            #
+            # if jabulani.rect.y == 672:
+            #     jabulani.rect.y = 0
+            if pygame.sprite.collide_mask(jabulani, cancha):
+                jabulani.rect.y += deltaPosY
+                
             else:
                 p1.rect.y += gravity
                 p2.rect.y += gravity
@@ -279,7 +290,7 @@ def main():  # main routine
             surf.blit(p1.image, p1.rect)
             surf.blit(p2.image, p2.rect)
             surf.blit(jabulani.image, jabulani.rect)
-            surf.blit(cancha.imgfield, [0, 672])
+            surf.blit(cancha.image, [0, 672])
             surf.blit(golEsq.image, [0, 320])
             surf.blit(golDir.image, [1177, 320])
             # print(events)
