@@ -6,9 +6,10 @@ import os
 
 import pygame
 
-
+# Criando a gravidade
 gravity = 3.5
 
+# Definindo algumas cores
 black = (0, 0, 0)
 grey = (127, 127, 127)
 white = (255, 255, 255)
@@ -22,7 +23,7 @@ class Background(pygame.sprite.Sprite):
         imagem = os.path.join('Imagem', 'fundo.PNG')
         print(imagem)
         try:                                        # Importanto a imagem
-            BackGround = pygame.image.load(imagem)  # do jogador 1
+            BackGround = pygame.image.load(imagem)  # da tela de fundo
         except pygame.error:
             print("Erro ao carregar imagem de fundo")
             sys.exit()
@@ -74,6 +75,7 @@ class Jogador2(pygame.sprite.Sprite):
     def __init__(self, colum, row, block):
 
         imagem = os.path.join('Imagem', 'mece.png')
+        
         print(imagem)
         try:                                        # Importanto a imagem
             player2Img = pygame.image.load(imagem)  # do jogador 2
@@ -90,6 +92,7 @@ class Jogador2(pygame.sprite.Sprite):
         self.rect.bottom = row
         self.mask = pygame.mask.from_surface(self.image)
         self.score = 0
+
 
 
 class Bola(pygame.sprite.Sprite):
@@ -118,8 +121,8 @@ class Campo(pygame.sprite.Sprite):
 
         imgfield = os.path.join('Imagem', 'field.png')
         print(imgfield)
-        try:
-            pitch = pygame.image.load(imgfield)  # Campo
+        try:                                     # Importando a imagem
+            pitch = pygame.image.load(imgfield)  # do campo
         except pygame.error:
             print("Erro ao carregar o campo")
             sys.exit()
@@ -135,11 +138,12 @@ class GolEsquerdo(pygame.sprite.Sprite):
     def __init__(self):
 
         imggol1 = os.path.join('Imagem', 'gol-esq.png')
+
         print(imggol1)
-        try:
-            g_esq = pygame.image.load(imggol1)  # Gol esquerdo
+        try:                                    # Importando a imagem
+            g_esq = pygame.image.load(imggol1)  # do gol esquerdo
         except pygame.error:
-            print("Erro")
+            print("Erro ao carregar imagem do gol esquerdo")
             sys.exit()
 
         pygame.sprite.Sprite.__init__(self)
@@ -153,11 +157,12 @@ class GolDireito(pygame.sprite.Sprite):
     def __init__(self):
 
         imggol2 = os.path.join('Imagem', 'gol-dir.png')
+
         print(imggol2)
-        try:
-            g_dir = pygame.image.load(imggol2)  # Gol direito
+        try:                                    # Impotando a imagem
+            g_dir = pygame.image.load(imggol2)  # do gol direito
         except pygame.error:
-            print("Erro")
+            print("Erro ao carregar imagem do gol direito")
             sys.exit()
 
         pygame.sprite.Sprite.__init__(self)
@@ -172,8 +177,8 @@ class Endscreen(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'endscreen.png')
         print(imagem)
-        try:  # Importanto a imagem
-            EndScreen = pygame.image.load(imagem)  # do jogador 1
+        try:                                       # Importanto a imagem
+            EndScreen = pygame.image.load(imagem)  # da endscreen
         except pygame.error:
             print("Erro ao carregar imagem final")
             sys.exit()
@@ -201,13 +206,16 @@ def main():  # main routine
 
     pygame.display.update()
 
-    font = pygame.font.Font(pygame.font.get_default_font(), 35)
+    fontScore = pygame.font.Font(pygame.font.get_default_font(), 35)
+    fontInstructions = pygame.font.Font(pygame.font.get_default_font(), 20)
 
     clock = pygame.time.Clock()
 
     posY = int(displayY / 4)
     posX = int(displayX / 6)
-    deltaPosX = 5
+    deltaPosX = 0
+    deltaPosXp1 = 0
+    deltaPosXp2 = 0
     deltaPosY = 50
 
     p1 = Jogador1(posX, posY, 'block')
@@ -216,6 +224,18 @@ def main():  # main routine
     cancha = Campo()
     golEsq = GolEsquerdo()
     golDir = GolDireito()
+    
+    torcida = os.path.join('Som', 'Torcida.ogg') #Som ambiente de torcida
+    pygame.mixer.music.load(torcida) #Carrega som
+    pygame.mixer.music.set_volume(0.05) #Volume
+    pygame.mixer.music.play(-1) #Toca som
+
+    sompulo = os.path.join('Som', 'Pular.ogg') #som do pulo
+    pulo = pygame.mixer.Sound(sompulo) #carrega som
+    somchute = os.path.join('Som', 'Chute.ogg') #som do chute
+    chute = pygame.mixer.Sound(somchute) #carrega som
+    somgol = os.path.join('Som', 'Gol.ogg') #som do gol
+    gol = pygame.mixer.Sound(somgol) #carrega som
 
     placarEsquerda = p1.score
     placarDireita = p2.score
@@ -227,6 +247,7 @@ def main():  # main routine
 
         events = pygame.event.get()
 
+        # Editando as teclas do teclado para dar para jogar:
         for event in events:
 
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -239,27 +260,50 @@ def main():  # main routine
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_a:
-                        p1.rect.x -= deltaPosX
-                    if event.key == pygame.K_d:
-                        p1.rect.x += deltaPosX
-                    if event.key == pygame.K_LEFT:
-                        p2.rect.x -= deltaPosX
+                if event.key == pygame.K_a:
+                    deltaPosXp1 = -3.5
+                    #p1.rect.x -= deltaPosX
 
-                    if event.key == pygame.K_RIGHT:
-                        p2.rect.x += deltaPosX
+                if event.key == pygame.K_d:
+                    deltaPosXp1 = 3.5
+                    #p1.rect.x += deltaPosX
 
-                    if event.key == pygame.K_w:
-                        p1.rect.y -= deltaPosY
+                if event.key == pygame.K_LEFT:
+                    deltaPosXp2 = -3.5
+                    #p2.rect.x -= deltaPosX
 
-                    if event.key == pygame.K_UP:
-                        p2.rect.y -= deltaPosY
+                if event.key == pygame.K_RIGHT:
+                    deltaPosXp2 = 3.5
+                    #p2.rect.x += deltaPosX
+
+                if event.key == pygame.K_w:
+                    p1.rect.y -= deltaPosY
+
+                if event.key == pygame.K_UP:
+                    p2.rect.y -= deltaPosY
+            
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    deltaPosXp2 = 0
+                if event.key == pygame.K_LEFT:
+                    deltaPosXp2 = 0
+                if event.key == pygame.K_a:
+                    deltaPosXp1 = 0
+                if event.key == pygame.K_d:
+                    deltaPosXp1 = 0
+            
 
             # p1.rect.y += gravity
             # p2.rect.y += gravity
             # jabulani.rect.y += gravity
 
+        p2.rect.x += deltaPosXp1
+        p1.rect.x += deltaPosXp2
+
+
+        
+
+        # Adicionando a tela inicial e fazendo o jogo rodar:
         if start:
 
             surf.blit(p1.image, p1.rect)
@@ -286,6 +330,7 @@ def main():  # main routine
 
             # p2.posX += deltaH_pos
 
+            # Adicionando as imagens do jogo
             surf.blit(backGround.image, [0, 0])
             surf.blit(p1.image, p1.rect)
             surf.blit(p2.image, p2.rect)
@@ -293,16 +338,36 @@ def main():  # main routine
             surf.blit(cancha.image, [0, 672])
             surf.blit(golEsq.image, [0, 320])
             surf.blit(golDir.image, [1177, 320])
-            # print(events)
 
             # Adicionando os placares:
-            textoEsquerda = font.render("Ribamar: {0}".format(placarEsquerda), True, yellow)
-            textoDireita = font.render("Messi Careca: {0}".format(placarDireita), True, yellow)
+            textoEsquerda = fontScore.render("Ribamar: {0}".format(placarEsquerda), True, yellow)
+            textoDireita = fontScore.render("Messi Careca: {0}".format(placarDireita), True, yellow)
             surf.blit(textoEsquerda, (10, 0))
             surf.blit(textoDireita, (1045, 0))
 
-        if p1.score == 7 or p2.score == 7:
-            pygame.draw.rect(surf, black, [1072, 603, 1072, 603])
+            # Adicionando a tela final do jogo:
+            if p1.score == 7:
+                surf.fill(black)
+                surf.blit(endScreen.image, [displayX / 5, displayY / 5])
+                textoVencedor1 = fontInstructions.render("Jogador 1 venceu!", True, white)
+                textoInstrucoes1 = fontInstructions.render("Pressione 'Enter' para jogar novamente", True, white)
+                textoInstrucoes2 = fontInstructions.render("Pressione 'ESC' para sair", True, white)
+                surf.blit(p1.image, (displayX * 0.47, displayY / 3))
+                surf.blit(textoVencedor1, [displayX * 4 / 9, displayY / 3])
+                surf.blit(textoInstrucoes1, [displayX * 4 / 11, displayY * 3 / 5])
+                surf.blit(textoInstrucoes2, [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY  * 11 / 17])
+
+
+            if p2.score == 7:
+                surf.fill(black)
+                surf.blit(endScreen.image, [displayX / 5, displayY / 5])
+                textoVencedor1 = fontInstructions.render("Jogador 2 venceu!", True, white)
+                textoInstrucoes1 = fontInstructions.render("Pressione 'Enter' para jogar novamente", True, white)
+                textoInstrucoes2 = fontInstructions.render("Pressione 'ESC' para sair", True, white)
+                surf.blit(p2.image, (displayX * 0.47, displayY / 3))
+                surf.blit(textoVencedor1, [displayX * 4 / 9, displayY / 3])
+                surf.blit(textoInstrucoes1, [displayX * 4 / 11, displayY * 3 / 5])
+                surf.blit(textoInstrucoes2, [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY  * 11 / 17])
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
