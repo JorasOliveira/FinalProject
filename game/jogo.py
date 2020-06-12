@@ -291,9 +291,15 @@ def main():  # main routine
                     deltaPosXp1 = 0
                 if event.key == pygame.K_d:
                     deltaPosXp1 = 0
+            
 
-        p2.rect.x += deltaPosXp1
-        p1.rect.x += deltaPosXp2
+            # p1.rect.y += gravity
+            # p2.rect.y += gravity
+            # jabulani.rect.y += gravity
+
+
+        p1.rect.x += deltaPosXp1
+        p2.rect.x += deltaPosXp2
 
 
         
