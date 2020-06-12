@@ -202,7 +202,9 @@ def main():  # main routine
 
     posY = int(displayY / 4)
     posX = int(displayX / 6)
-    deltaPosX = 5
+    deltaPosX = 0
+    deltaPosXp1 = 0
+    deltaPosXp2 = 0
     deltaPosY = 50
 
     p1 = Jogador1(posX, posY, 'block')
@@ -214,17 +216,15 @@ def main():  # main routine
     
     torcida = os.path.join('Som', 'Torcida.ogg') #Som ambiente de torcida
     pygame.mixer.music.load(torcida) #Carrega som
-    pygame.mixer.music.set_volume(0.1) #Volume
+    pygame.mixer.music.set_volume(0.05) #Volume
     pygame.mixer.music.play(-1) #Toca som
 
-    """sompulo = os.path.join('Som', 'pulo.WAV') #som do pulo
-    pulo = pygame.mixer.music.load(sompulo) #carrega som
-    somchute = os.path.join('Som', 'Ballkick.WAV') #som do chute
-    chute = pygame.mixer.music.load(somchute) #carrega som
-    sompulo = os.path.join('Som', 'pulo.WAV') #som do pulo
-    pulo = pygame.mixer.music.load(sompulo) #carrega som
-    somchute = os.path.join('Som', 'Ballkick.WAV') #som do chute
-    chute = pygame.mixer.music.load(somchute) #carrega som"""""
+    sompulo = os.path.join('Som', 'Pular.ogg') #som do pulo
+    pulo = pygame.mixer.Sound(sompulo) #carrega som
+    somchute = os.path.join('Som', 'Chute.ogg') #som do chute
+    chute = pygame.mixer.Sound(somchute) #carrega som
+    somgol = os.path.join('Som', 'Gol.ogg') #som do gol
+    gol = pygame.mixer.Sound(somgol) #carrega som
 
     placarEsquerda = p1.score
     placarDireita = p2.score
@@ -250,24 +250,47 @@ def main():  # main routine
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
-                    p1.rect.x -= deltaPosX
+                    deltaPosXp1 = -3.5
+                    #p1.rect.x -= deltaPosX
+
                 if event.key == pygame.K_d:
-                    p1.rect.x += deltaPosX
+                    deltaPosXp1 = 3.5
+                    #p1.rect.x += deltaPosX
+
                 if event.key == pygame.K_LEFT:
-                    p2.rect.x -= deltaPosX
+                    deltaPosXp2 = -3.5
+                    #p2.rect.x -= deltaPosX
 
                 if event.key == pygame.K_RIGHT:
-                    p2.rect.x += deltaPosX
+                    deltaPosXp2 = 3.5
+                    #p2.rect.x += deltaPosX
 
                 if event.key == pygame.K_w:
                     p1.rect.y -= deltaPosY
 
                 if event.key == pygame.K_UP:
                     p2.rect.y -= deltaPosY
+            
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    deltaPosXp2 = 0
+                if event.key == pygame.K_LEFT:
+                    deltaPosXp2 = 0
+                if event.key == pygame.K_a:
+                    deltaPosXp1 = 0
+                if event.key == pygame.K_d:
+                    deltaPosXp1 = 0
+            
 
             # p1.rect.y += gravity
             # p2.rect.y += gravity
             # jabulani.rect.y += gravity
+
+        p2.rect.x += deltaPosXp1
+        p1.rect.x += deltaPosXp2
+
+
+        
 
         # Adicionando a tela inicial e fazendo o jogo rodar:
         if start:
