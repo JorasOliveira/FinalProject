@@ -4,7 +4,7 @@ import pygame
 
 # Criando a gravidade
 gravity = 3.5
-atrito = 0.00001
+atrito = 1.005
 
 # Definindo algumas cores
 black = (0, 0, 0)
@@ -232,8 +232,7 @@ def main():  # main routine
 
     posY = int(displayY / 4)
     posX = int(displayX / 6)
-    deltaPosXp1 = 0
-    deltaPosXp2 = 0
+    deltaPosX = 3.5
     deltaPosY = 50
 
     # cria os objetos dos jogadores/suas sprites
@@ -260,8 +259,6 @@ def main():  # main routine
     chute = pygame.mixer.Sound(somchute)  # carrega som
     somgol = os.path.join('Som', 'Gol.ogg')  # som do gol
     gol = pygame.mixer.Sound(somgol)  # carrega som
-
-
 
     while True:
         surf.fill(black)
@@ -296,42 +293,23 @@ def main():  # main routine
 
                 # jogador 1, se move com WAD
                 if event.key == pygame.K_a:  # a para esquerda
-                    deltaPosXp1 = -3.5
-                    # p1.rect.x -= deltaPosX
+                    p1.speedX -= deltaPosX
 
                 if event.key == pygame.K_d:  # d para direita
-                    deltaPosXp1 = 3.5
-                    # p1.rect.x += deltaPosX
+                    p1.speedX += deltaPosX
 
                 # jogador 2, se move com as setas
                 if event.key == pygame.K_LEFT:  # seta da esquerda para esquerda
-                    deltaPosXp2 = -3.5
-                    # p2.rect.x -= deltaPosX
+                    p2.speedX -= deltaPosX
 
                 if event.key == pygame.K_RIGHT:  # seta da direita para direita
-                    deltaPosXp2 = 3.5
-                    # p2.rect.x += deltaPosX
+                    p2.speedX += deltaPosX
 
                 if event.key == pygame.K_w:  # w faz o jogador 1 pular
                     p1.rect.y -= deltaPosY
 
                 if event.key == pygame.K_UP:  # seta para cima faz o jogador 2 pular
                     p2.rect.y -= deltaPosY
-
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                    deltaPosXp2 = 0
-                if event.key == pygame.K_LEFT:
-                    deltaPosXp2 = 0
-                if event.key == pygame.K_a:
-                    deltaPosXp1 = 0
-                if event.key == pygame.K_d:
-                    deltaPosXp1 = 0
-
-        p1.rect.x += deltaPosXp1  # adicionando a velocaide (varicao da posicao no isntante de tempo) a poiscao do
-        # jogador 1
-        p2.rect.x += deltaPosXp2  # adicionando a velocaide (varicao da posicao no isntante de tempo) a poiscao do
-        # jogador 2
 
         # Adicionando a tela inicial e fazendo o jogo rodar:
         if start:
@@ -359,32 +337,39 @@ def main():  # main routine
                     sprite.rect.x = 1336 - sprite.rect.width
 
                 if pygame.sprite.collide_mask(p1, jabulani):
-                    jabulani.speedX = deltaPosXp1
+                    jabulani.speedX = deltaPosX
                     jabulani.speedY = -20
 
                 if pygame.sprite.collide_rect(p2, jabulani):
-                    jabulani.speedX = deltaPosXp2
+                    jabulani.speedX = deltaPosX
                     jabulani.speedY = -20
 
                 if pygame.sprite.collide_rect(jabulani, golDir):
-
                     p1.score += 1
-                    surf.blit(p1.image, [posX, posY,])  # player 1
+                    surf.blit(p1.image, [posX, posY])  # player 1
                     surf.blit(p2.image, p2.rect)  # player 2
                     surf.blit(jabulani.image, jabulani.rect)  # bola
 
                 if pygame.sprite.collide_mask(jabulani, golEsq):
-
                     p2.score += 1
-                    surf.blit(p1.image, [posX, posY,])  # player 1
+                    surf.blit(p1.image, [posX, posY])  # player 1
 
                 jabulani.speedY += gravity/20
                 p1.speedY += gravity/30
                 p2.speedY += gravity/30
+                jabulani.speedX /= atrito
 
-                # p1.speedX *= atrito
-                # p2.speedX *= atrito
-                # jabulani.speedX *= atrito
+                if 0.1 >= jabulani.speedX >= -0.5:
+                    jabulani.speedX = 0
+
+                p1.speedX /= atrito
+                if 0.1 >= p1.speedX >= -0.5:
+                    p1.speedX = 0
+                p2.speedX /= atrito
+
+                if 0.1 >= p2.speedX >= -0.5:
+                    p2.speedX = 0
+
             sprites.update()
 
             # Adicionando as imagens do jogo
