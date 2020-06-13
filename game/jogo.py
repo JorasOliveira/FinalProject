@@ -1,14 +1,11 @@
 import sys
-
 import os
-
-# import place as place
-
 import pygame
 
 # Criando a gravidade
 gravity = 3.5
 atrito = 0.00001
+
 # Definindo algumas cores
 black = (0, 0, 0)
 grey = (127, 127, 127)
@@ -166,8 +163,10 @@ class GolEsquerdo(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = g_esq
-        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.bottom = 672
+        self.mask = pygame.mask.from_surface(self.image)
 
 
 class GolDireito(pygame.sprite.Sprite):
@@ -187,6 +186,8 @@ class GolDireito(pygame.sprite.Sprite):
         self.image = g_dir
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
+        self.rect.x = 1177
+        self.rect.bottom = 672
 
 
 class Endscreen(pygame.sprite.Sprite):
@@ -339,12 +340,10 @@ def main():  # main routine
             surf.blit(p2.image, p2.rect)
             surf.blit(jabulani.image, jabulani.rect)
             surf.blit(startScreen.image, [displayX / 10, displayY / 10])
-# pymumk
-        #pygame.sprite.spritecollide_rect()
+
+        # pygame.sprite.spritecollide_rect()
         # sai da tela inicial e comeca o jogo
         else:
-
-            #if pygame.sprite.collide_mask(jabulani, cancha):
 
             # calculando colisoes
             for sprite in sprites:
@@ -352,7 +351,6 @@ def main():  # main routine
                 if sprite.rect.bottom > 672:
                     sprite.rect.bottom = 672
                     sprite.speedY = 0
-                    print("here")
 
                 if sprite.rect.x <= 0:
                     sprite.rect.x = 0
@@ -364,16 +362,21 @@ def main():  # main routine
                     jabulani.speedX = deltaPosXp1
                     jabulani.speedY = -20
 
-                if pygame.sprite.collide_mask(p2, jabulani):
+                if pygame.sprite.collide_rect(p2, jabulani):
                     jabulani.speedX = deltaPosXp2
                     jabulani.speedY = -20
 
-                if pygame.sprite.collide_mask(golEsq, jabulani):
-                    placarDireita += 1
+                if pygame.sprite.collide_rect(jabulani, golDir):
 
-                if pygame.sprite.collide_mask(jabulani, golDir):
                     p1.score += 1
-                    placarEsquerda += 1
+                    surf.blit(p1.image, [posX, posY,])  # player 1
+                    surf.blit(p2.image, p2.rect)  # player 2
+                    surf.blit(jabulani.image, jabulani.rect)  # bola
+
+                if pygame.sprite.collide_mask(jabulani, golEsq):
+
+                    p2.score += 1
+                    surf.blit(p1.image, [posX, posY,])  # player 1
 
                 jabulani.speedY += gravity/20
                 p1.speedY += gravity/30
@@ -390,7 +393,7 @@ def main():  # main routine
             surf.blit(p2.image, p2.rect)  # player 2
             surf.blit(jabulani.image, jabulani.rect)  # bola
             surf.blit(cancha.image, [0, 672])  # campo
-            surf.blit(golEsq.image, [0, 320])  # gol da esquerda
+            surf.blit(golEsq.image, golEsq.rect)  # gol da esquerda
             surf.blit(golDir.image, [1177, 320])  # gol da direita
 
             # Adicionando os placares:
