@@ -395,6 +395,8 @@ def main():  # main routine
             surf.blit(cancha.image, [0, 672])  # campo
             surf.blit(golEsq.image, golEsq.rect)  # gol da esquerda
             surf.blit(golDir.image, [1177, 320])  # gol da direita
+            goldoribamar = pygame.draw.rect(surf, white, (85,325,10,340)) #Linha de ponto gol esquerdo
+            goldoribamar = pygame.draw.rect(surf, white, ((1336-85),325,10,340)) #Linha de ponto gol direito
 
             # Adicionando os placares:
             textoEsquerda = fontScore.render("Ribamar: {0}".format(placarEsquerda), True, yellow)
