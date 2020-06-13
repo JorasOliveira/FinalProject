@@ -1,6 +1,7 @@
 import sys
 import os
 import pygame
+import random
 
 # Criando a gravidade
 gravity = 3.5
@@ -337,12 +338,12 @@ def main():  # main routine
                     sprite.rect.x = 1336 - sprite.rect.width
 
                 if pygame.sprite.collide_mask(p1, jabulani):
-                    jabulani.speedX = deltaPosX
-                    jabulani.speedY = -20
+                    jabulani.speedX = (random.randint(1,20))
+                    jabulani.speedY = -(random.randint(8, 18))
 
                 if pygame.sprite.collide_rect(p2, jabulani):
-                    jabulani.speedX = deltaPosX
-                    jabulani.speedY = -20
+                    jabulani.speedX = -(random.randint(1,20))
+                    jabulani.speedY = -(random.randint(8, 18))
 
                 if pygame.sprite.collide_rect(jabulani, golDir):
                     p1.score += 1
