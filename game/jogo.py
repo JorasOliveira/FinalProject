@@ -1,7 +1,7 @@
 import sys
 import os
 import pygame
-
+import random
 # Criando a gravidade
 gravity = 3.5
 atrito = 1.005
@@ -242,6 +242,9 @@ def main():  # main routine
     cancha = Campo()
     golEsq = GolEsquerdo()
     golDir = GolDireito()
+    # golDoRibamar = pygame.draw.rect(surf, white, (85, 325, 10, 340))  # Linha de ponto gol esquerdo
+    # golDoMese = pygame.draw.rect(surf, white, ((1336 - 85), 325, 10, 340))  # Linha de ponto gol direito
+    # print(golDoRibamar)
 
     sprites = pygame.sprite.Group()  # criando o grupod e sprites
     sprites.add(p1, p2, jabulani)  # adiciona as sprites ao grupo de sprites
@@ -307,9 +310,11 @@ def main():  # main routine
 
                 if event.key == pygame.K_w:  # w faz o jogador 1 pular
                     p1.rect.y -= deltaPosY
+                    pulo.play()
 
                 if event.key == pygame.K_UP:  # seta para cima faz o jogador 2 pular
                     p2.rect.y -= deltaPosY
+                    pulo.play()
 
         # Adicionando a tela inicial e fazendo o jogo rodar:
         if start:
@@ -337,12 +342,14 @@ def main():  # main routine
                     sprite.rect.x = 1336 - sprite.rect.width
 
                 if pygame.sprite.collide_mask(p1, jabulani):
-                    jabulani.speedX = deltaPosX
-                    jabulani.speedY = -20
+                    jabulani.speedX = (random.randint(1, 20))
+                    jabulani.speedY = -(random.randint(8, 18))
+                    chute.play()
 
-                if pygame.sprite.collide_rect(p2, jabulani):
-                    jabulani.speedX = deltaPosX
-                    jabulani.speedY = -20
+                if pygame.sprite.collide_mask(p2, jabulani):
+                    jabulani.speedX = -(random.randint(1, 20))
+                    jabulani.speedY = -(random.randint(8, 18))
+                    chute.play()
 
                 if pygame.sprite.collide_rect(jabulani, golDir):
                     p1.score += 1
@@ -350,9 +357,10 @@ def main():  # main routine
                     surf.blit(p2.image, p2.rect)  # player 2
                     surf.blit(jabulani.image, jabulani.rect)  # bola
 
-                if pygame.sprite.collide_mask(jabulani, golEsq):
+                if pygame.sprite.collide_rect(jabulani, golEsq):
                     p2.score += 1
                     surf.blit(p1.image, [posX, posY])  # player 1
+
 
                 jabulani.speedY += gravity/20
                 p1.speedY += gravity/30
