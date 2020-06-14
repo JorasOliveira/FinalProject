@@ -289,7 +289,26 @@ def main():  # main routine
             # detectando o enter para iniciar o jogo
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 start = False
-                end = False
+
+            # reincia o jogo caso queiram jogar denovo apos
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and (p1.score >= 7 or p2.score >= 7):
+                p1.score = 0
+                p2.score = 0
+
+                jabulani.rect.x = displayX / 2
+                jabulani.rect.y = displayY / 2
+                jabulani.speedX = 0
+                jabulani.speedY = 0
+
+                p1.rect.x = posX
+                p1.rect.y = posY
+                p1.speedX = 0
+                p1.speedY = 0
+
+                p2.rect.x = 1336 - 350
+                p2.rect.y = posY
+                p2.speedX = 0
+                p2.speedY = 0
 
             # quitando o jogo, fora da tela inicial
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -350,12 +369,12 @@ def main():  # main routine
                 if pygame.sprite.collide_mask(p1, jabulani):
 
                     jabulani.speedX = p1.speedX * (random.uniform(1, 5))
-                    jabulani.speedY = -p1.speedY * (random.uniform(8, 10))
+                    jabulani.speedY = -p1.speedY * (random.uniform(5, 8))
                     chute.play()
 
                 if pygame.sprite.collide_mask(p2, jabulani):
                     jabulani.speedX = p2.speedX * (random.uniform(1, 5))
-                    jabulani.speedY = -p2.speedY * (random.uniform(8, 10))
+                    jabulani.speedY = -p2.speedY * (random.uniform(5, 8))
                     chute.play()
 
                 if pygame.sprite.collide_rect(jabulani, golDir):
