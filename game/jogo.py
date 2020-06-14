@@ -20,7 +20,7 @@ class Background(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'fundo.PNG')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                        # Importanto a imagem
             BackGround = pygame.image.load(imagem)  # da tela de fundo
         except pygame.error:
             print("Erro ao carregar imagem de fundo")
@@ -36,7 +36,7 @@ class Startscreen(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'startscreen.png')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                         # Importanto a imagem
             StartScreen = pygame.image.load(imagem)  # da Tela Inicial
         except pygame.error:
             print("Erro ao carregar imagem inicial")
@@ -52,7 +52,7 @@ class Jogador1(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'ribamar.png')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                        # Importanto a imagem
             player1Img = pygame.image.load(imagem)  # do jogador 1
         except pygame.error:
             print("Erro ao carregar imagem do jogador 1")
@@ -66,7 +66,7 @@ class Jogador1(pygame.sprite.Sprite):
         self.rect.x = column
         self.rect.bottom = row
         self.mask = pygame.mask.from_surface(self.image)
-        self.score = 0
+        self.score = 7
         self.speedX = 0
         self.speedY = 0
 
@@ -81,7 +81,7 @@ class Jogador2(pygame.sprite.Sprite):
         imagem = os.path.join('Imagem', 'mece.png')
 
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                        # Importanto a imagem
             player2Img = pygame.image.load(imagem)  # do jogador 2
         except pygame.error:
             print("Erro ao carregar imagem do jogador 2")
@@ -109,7 +109,7 @@ class Bola(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'jabulani.png')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                  # Importanto a imagem
             ball = pygame.image.load(imagem)  # da bola
         except pygame.error:
             print("Erro ao carregar a bola")
@@ -136,7 +136,7 @@ class Campo(pygame.sprite.Sprite):
 
         imgfield = os.path.join('Imagem', 'field.png')
         print(imgfield)
-        try:  # Importando a imagem
+        try:                                     # Importando a imagem
             pitch = pygame.image.load(imgfield)  # do campo
         except pygame.error:
             print("Erro ao carregar o campo")
@@ -155,7 +155,7 @@ class GolEsquerdo(pygame.sprite.Sprite):
         imggol1 = os.path.join('Imagem', 'gol-esq.png')
 
         print(imggol1)
-        try:  # Importando a imagem
+        try:                                    # Importando a imagem
             g_esq = pygame.image.load(imggol1)  # do gol esquerdo
         except pygame.error:
             print("Erro ao carregar imagem do gol esquerdo")
@@ -176,7 +176,7 @@ class GolDireito(pygame.sprite.Sprite):
         imggol2 = os.path.join('Imagem', 'gol-dir.png')
 
         print(imggol2)
-        try:  # Impotando a imagem
+        try:                                    # Impotando a imagem
             g_dir = pygame.image.load(imggol2)  # do gol direito
         except pygame.error:
             print("Erro ao carregar imagem do gol direito")
@@ -196,7 +196,7 @@ class Endscreen(pygame.sprite.Sprite):
 
         imagem = os.path.join('Imagem', 'endscreen.png')
         print(imagem)
-        try:  # Importanto a imagem
+        try:                                       # Importanto a imagem
             EndScreen = pygame.image.load(imagem)  # da endscreen
         except pygame.error:
             print("Erro ao carregar imagem final")
@@ -222,7 +222,9 @@ def main():  # main routine
 
     endScreen = Endscreen()
 
+    # Criando os booleanos para configurar a tela inicial e final:
     start = True
+    end = True
 
     pygame.display.update()
 
@@ -244,7 +246,7 @@ def main():  # main routine
     golEsq = GolEsquerdo()
     golDir = GolDireito()
 
-    sprites = pygame.sprite.Group()  # criando o grupod e sprites
+    sprites = pygame.sprite.Group()  # criando o grupo de sprites
     sprites.add(p1, p2, jabulani)  # adiciona as sprites ao grupo de sprites
 
     # inicializa a musica de fundo
@@ -283,6 +285,7 @@ def main():  # main routine
             # detectando o enter para iniciar o jogo
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                 start = False
+                end = False
 
             # quitando o jogo, fora da tela inicial
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -291,6 +294,9 @@ def main():  # main routine
 
             # detectando as key presses e fazendo o movimento referente
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    deltaPosXp1 = -3.5
+                    #p1.rect.x -= deltaPosX
 
                 # jogador 1, se move com WAD
                 if event.key == pygame.K_a:  # a para esquerda
@@ -391,7 +397,7 @@ def main():  # main routine
             surf.blit(textoDireita, (1045, 0))
 
             # Adicionando a tela final do jogo:
-            if p1.score == 7:
+            if p1.score == 7 and  not end:
                 surf.fill(black)
                 surf.blit(endScreen.image, [displayX / 5, displayY / 5])
                 textoVencedor1 = fontInstructions.render("Jogador 1 venceu!", True, white)
@@ -403,7 +409,7 @@ def main():  # main routine
                 surf.blit(textoInstrucoes2,
                           [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY * 11 / 17])
 
-            if p2.score == 7:
+            if p2.score == 7 and end:
                 surf.fill(black)
                 surf.blit(endScreen.image, [displayX / 5, displayY / 5])
                 textoVencedor1 = fontInstructions.render("Jogador 2 venceu!", True, white)
@@ -414,6 +420,8 @@ def main():  # main routine
                 surf.blit(textoInstrucoes1, [displayX * 4 / 11, displayY * 3 / 5])
                 surf.blit(textoInstrucoes2,
                           [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY * 11 / 17])
+                p1.score = 0
+                p2.score = 0
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
