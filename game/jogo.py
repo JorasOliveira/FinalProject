@@ -66,7 +66,7 @@ class Jogador1(pygame.sprite.Sprite):
         self.rect.x = column
         self.rect.bottom = row
         self.mask = pygame.mask.from_surface(self.image)
-        self.score = 7
+        self.score = 0
         self.speedX = 0
         self.speedY = 0
 
@@ -359,22 +359,19 @@ def main():  # main routine
                     jabulani.speedY = -(random.randint(8, 18))
                     chute.play()
 
-
                 if pygame.sprite.collide_rect(p2, jabulani):
                     jabulani.speedX = -(random.randint(1,20))
                     jabulani.speedY = -(random.randint(8, 18))
 
-
                 if pygame.sprite.collide_rect(jabulani, golDir):
                     p1.score += 1
-                    surf.blit(p1.image, [posX, posY])  # player 1
-                    surf.blit(p2.image, p2.rect)  # player 2
-                    surf.blit(jabulani.image, jabulani.rect)  # bola
+                    gol.play()
+                    # p1.rect.x = posX
+                    # p1.rect.y = posY
 
                 if pygame.sprite.collide_rect(jabulani, golEsq):
                     p2.score += 1
-                    surf.blit(p1.image, [posX, posY])  # player 1
-
+                    gol.play()
 
                 jabulani.speedY += gravity/20
                 p1.speedY += gravity/30
@@ -412,7 +409,7 @@ def main():  # main routine
             surf.blit(textoDireita, (1045, 0))
 
             # Adicionando a tela final do jogo:
-            if p1.score == 7 and  not end:
+            if p1.score >= 7:
                 surf.fill(black)
                 surf.blit(endScreen.image, [displayX / 5, displayY / 5])
                 textoVencedor1 = fontInstructions.render("Jogador 1 venceu!", True, white)
@@ -424,7 +421,7 @@ def main():  # main routine
                 surf.blit(textoInstrucoes2,
                           [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY * 11 / 17])
 
-            if p2.score == 7 and end:
+            if p2.score >= 7:
                 surf.fill(black)
                 surf.blit(endScreen.image, [displayX / 5, displayY / 5])
                 textoVencedor1 = fontInstructions.render("Jogador 2 venceu!", True, white)
