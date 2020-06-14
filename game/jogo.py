@@ -235,8 +235,8 @@ def main():  # main routine
 
     posY = int(displayY / 4)
     posX = int(displayX / 6)
-    deltaPosX = 3.5
-    deltaPosY = 50
+    deltaPosX = 1.75
+    deltaPosY = 100
 
     # cria os objetos dos jogadores/suas sprites
     p1 = Jogador1(posX, posY, 'block')
@@ -255,7 +255,7 @@ def main():  # main routine
     # inicializa a musica de fundo
     torcida = os.path.join('Som', 'Torcida.ogg')  # Som ambiente de torcida
     pygame.mixer.music.load(torcida)  # Carrega som
-    pygame.mixer.music.set_volume(0.05)  # Volume
+    pygame.mixer.music.set_volume(0.2)  # Volume
     pygame.mixer.music.play(-1)  # Toca som
 
     # inicia os outros sons
@@ -368,14 +368,26 @@ def main():  # main routine
 
                 if pygame.sprite.collide_mask(p1, jabulani):
 
-                    jabulani.speedX = p1.speedX * (random.uniform(1, 5))
-                    jabulani.speedY = -p1.speedY * (random.uniform(5, 8))
-                    chute.play()
+                    if p1.speedX >= 0:
+                        jabulani.speedX = p1.speedX * (random.uniform(1, 3))
+                        jabulani.speedY = (-1) * random.randint(12, 18) + p1.speedY * (random.uniform(0.1, 0.7))
+                        chute.play()
+                    else:
+                        jabulani.speedX = p1.speedX * (random.uniform(1, 3)) * (-1)
+                        jabulani.speedY = -p1.speedY * (random.uniform(2, 4))
+                        chute.play()
 
                 if pygame.sprite.collide_mask(p2, jabulani):
-                    jabulani.speedX = p2.speedX * (random.uniform(1, 5))
-                    jabulani.speedY = -p2.speedY * (random.uniform(5, 8))
-                    chute.play()
+
+                    if p2.speedX <= 0:
+                        jabulani.speedX = p2.speedX * (random.uniform(1, 3))
+                        jabulani.speedY = (-1) * random.randint(12, 18) + p2.speedY * (random.uniform(0.1, 0.7))
+                        chute.play()
+
+                    else:
+                        jabulani.speedX = p2.speedX * (random.uniform(1, 3)) * (-1)
+                        jabulani.speedY = -p2.speedY * (random.uniform(2, 4))
+                        chute.play()
 
                 if pygame.sprite.collide_rect(jabulani, golDir):
                     p1.score += 1
