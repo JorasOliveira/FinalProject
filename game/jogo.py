@@ -265,6 +265,7 @@ def main():  # main routine
     chute = pygame.mixer.Sound(somchute)  # carrega som
     somgol = os.path.join('Som', 'Gol.ogg')  # som do gol
     gol = pygame.mixer.Sound(somgol)  # carrega som
+    gol.set_volume(0.7)
 
     while True:
         surf.fill(black)
@@ -297,13 +298,11 @@ def main():  # main routine
 
             # detectando as key presses e fazendo o movimento referente
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    deltaPosXp1 = -3.5
-                    #p1.rect.x -= deltaPosX
 
                 # jogador 1, se move com WAD
                 if event.key == pygame.K_a:  # a para esquerda
                     p1.speedX -= deltaPosX
+                    p1.rect.x -= deltaPosX
 
                 if event.key == pygame.K_d:  # d para direita
                     p1.speedX += deltaPosX
@@ -350,28 +349,52 @@ def main():  # main routine
 
                 if pygame.sprite.collide_mask(p1, jabulani):
 
-                    jabulani.speedX = (random.randint(1, 20))
-                    jabulani.speedY = -(random.randint(8, 18))
+                    jabulani.speedX = p1.speedX * (random.uniform(1, 5))
+                    jabulani.speedY = -p1.speedY * (random.uniform(8, 10))
                     chute.play()
 
                 if pygame.sprite.collide_mask(p2, jabulani):
-                    jabulani.speedX = -(random.randint(1, 20))
-                    jabulani.speedY = -(random.randint(8, 18))
+                    jabulani.speedX = p2.speedX * (random.uniform(1, 5))
+                    jabulani.speedY = -p2.speedY * (random.uniform(8, 10))
                     chute.play()
-
-                if pygame.sprite.collide_rect(p2, jabulani):
-                    jabulani.speedX = -(random.randint(1,20))
-                    jabulani.speedY = -(random.randint(8, 18))
 
                 if pygame.sprite.collide_rect(jabulani, golDir):
                     p1.score += 1
                     gol.play()
-                    # p1.rect.x = posX
-                    # p1.rect.y = posY
+
+                    jabulani.rect.x = displayX / 2
+                    jabulani.rect.y = displayY / 2
+                    jabulani.speedX = 0
+                    jabulani.speedY = 0
+
+                    p1.rect.x = posX
+                    p1.rect.y = posY
+                    p1.speedX = 0
+                    p1.speedY = 0
+
+                    p2.rect.x = 1336 - 350
+                    p2.rect.y = posY
+                    p2.speedX = 0
+                    p2.speedY = 0
 
                 if pygame.sprite.collide_rect(jabulani, golEsq):
                     p2.score += 1
                     gol.play()
+
+                    jabulani.rect.x = displayX / 2
+                    jabulani.rect.y = displayY / 2
+                    jabulani.speedX = 0
+                    jabulani.speedY = 0
+
+                    p1.rect.x = posX
+                    p1.rect.y = posY
+                    p1.speedX = 0
+                    p1.speedY = 0
+
+                    p2.rect.x = 1336 - 350
+                    p2.rect.y = posY
+                    p2.speedX = 0
+                    p2.speedY = 0
 
                 jabulani.speedY += gravity/20
                 p1.speedY += gravity/30
@@ -432,8 +455,6 @@ def main():  # main routine
                 surf.blit(textoInstrucoes1, [displayX * 4 / 11, displayY * 3 / 5])
                 surf.blit(textoInstrucoes2,
                           [(displayX / 2) - (textoInstrucoes2.get_rect().width / 2), displayY * 11 / 17])
-                p1.score = 0
-                p2.score = 0
 
         pygame.display.flip()  # faz o update da imagine, usando troca de memory bugger
 
