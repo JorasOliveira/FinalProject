@@ -11,3 +11,6 @@ Jogador 2 usa as setas da esquerda e direita para se mover, seta para cima para 
 
 Aperte esc para terminar o jogo/fechar a janela
 Quando acaba o jogo prescione enter para começar outro
+
+Vídeo: https://youtu.be/VJ0xRYVkhZE
+

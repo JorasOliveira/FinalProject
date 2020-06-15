@@ -223,9 +223,8 @@ def main():  # main routine
 
     endScreen = Endscreen()
 
-    # Criando os booleanos para configurar a tela inicial e final:
+    # Criando o booleano para configurar a tela inicial:
     start = True
-    end = True
 
     pygame.display.update()
 
@@ -316,7 +315,7 @@ def main():  # main routine
             # detectando as key presses e fazendo o movimento referente
             if event.type == pygame.KEYDOWN:
 
-                # jogador 1, se move com WAD
+                # jogador 1, se move com W,A,D
                 if event.key == pygame.K_a:  # a para esquerda
                     p1.speedX -= deltaPosX
                     p1.rect.x -= deltaPosX
@@ -391,7 +390,7 @@ def main():  # main routine
                         jabulani.speedY = -p2.speedY * (random.uniform(2, 4))
                         chute.play()
 
-                # colieos com o gol, toca o som, aumenta o placar, e reseta todos os sprites para a posicao inicial,
+                # colisões com o gol, toca o som, aumenta o placar, e reseta todos os sprites para a posicao inicial,
                 # com, velocidade X e Y = 0
                 if pygame.sprite.collide_rect(jabulani, golDir):
                     p1.score += 1
