@@ -4,15 +4,15 @@ Feito por Jorás Oliveira, Eduardo Vescovi e Ralph Michaan.
 
 O jogo necessita da biblioteca pygame. Para instalar, refira-se a: https://www.pygame.org/wiki/GettingStarted
 
-**Jogo:
+**Jogo:**
 
 Cada jogador tem que cabecear/chutar a bola, tentando fazer um gol.
 
-**Objetivo:
+**Objetivo:**
 
 Chegar em 7 pontos para ganhar.
 
-**Controles:
+**Controles:**
 
 Jogador 1 usa A e D para se mover, W para pular.
 
