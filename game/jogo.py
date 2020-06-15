@@ -355,7 +355,7 @@ def main():  # main routine
             # calculando colisoes
             for sprite in sprites:
 
-                if sprite.rect.bottom > 672: # com o chao
+                if sprite.rect.bottom > 672:  # com o chao
                     sprite.rect.bottom = 672
                     sprite.speedY = 0
 
@@ -393,42 +393,56 @@ def main():  # main routine
                 # colisões com o gol, toca o som, aumenta o placar, e reseta todos os sprites para a posicao inicial,
                 # com, velocidade X e Y = 0
                 if pygame.sprite.collide_rect(jabulani, golDir):
-                    p1.score += 1
-                    gol.play()
 
-                    jabulani.rect.x = displayX / 2
-                    jabulani.rect.y = displayY / 2
-                    jabulani.speedX = 0
-                    jabulani.speedY = 0
+                    if jabulani.rect.top >= golDir.rect.top:
+                        p1.score += 1
+                        gol.play()
 
-                    p1.rect.x = posX
-                    p1.rect.y = posY
-                    p1.speedX = 0
-                    p1.speedY = 0
+                        jabulani.rect.x = displayX / 2
+                        jabulani.rect.y = displayY / 2
+                        jabulani.speedX = 0
+                        jabulani.speedY = 0
 
-                    p2.rect.x = 1336 - 350
-                    p2.rect.y = posY
-                    p2.speedX = 0
-                    p2.speedY = 0
+                        p1.rect.x = posX
+                        p1.rect.y = posY
+                        p1.speedX = 0
+                        p1.speedY = 0
+
+                        p2.rect.x = 1336 - 350
+                        p2.rect.y = posY
+                        p2.speedX = 0
+                        p2.speedY = 0
+
+                    elif jabulani.rect.bottom >= golDir.rect.top:
+                        jabulani.rect.bottom = golEsq.rect.top
+                        jabulani.speedX = -jabulani.speedX
+                        jabulani.speedY = -jabulani.speedY
 
                 if pygame.sprite.collide_rect(jabulani, golEsq):
-                    p2.score += 1
-                    gol.play()
 
-                    jabulani.rect.x = displayX / 2
-                    jabulani.rect.y = displayY / 2
-                    jabulani.speedX = 0
-                    jabulani.speedY = 0
+                    if jabulani.rect.top >= golEsq.rect.top:
+                        p2.score += 1
+                        gol.play()
 
-                    p1.rect.x = posX
-                    p1.rect.y = posY
-                    p1.speedX = 0
-                    p1.speedY = 0
+                        jabulani.rect.x = displayX / 2
+                        jabulani.rect.y = displayY / 2
+                        jabulani.speedX = 0
+                        jabulani.speedY = 0
 
-                    p2.rect.x = 1336 - 350
-                    p2.rect.y = posY
-                    p2.speedX = 0
-                    p2.speedY = 0
+                        p1.rect.x = posX
+                        p1.rect.y = posY
+                        p1.speedX = 0
+                        p1.speedY = 0
+
+                        p2.rect.x = 1336 - 350
+                        p2.rect.y = posY
+                        p2.speedX = 0
+                        p2.speedY = 0
+
+                    elif jabulani.rect.bottom >= golEsq.rect.top:
+                        jabulani.rect.bottom = golEsq.rect.top
+                        jabulani.speedX = -jabulani.speedX
+                        jabulani.speedY = -jabulani.speedY
 
                 # gravidade, e atrito na bola
                 jabulani.speedY += gravity/20
