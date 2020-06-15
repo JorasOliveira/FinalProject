@@ -317,19 +317,27 @@ def main():  # main routine
 
                 # jogador 1, se move com W,A,D
                 if event.key == pygame.K_a:  # a para esquerda
+                    if p1.speedX >= 0.1:
+                        p1.speedX = 0
                     p1.speedX -= deltaPosX
                     p1.rect.x -= deltaPosX
 
                 if event.key == pygame.K_d:  # d para direita
+                    if p1.speedX <= -0.1:
+                        p1.speedX = 0
                     p1.speedX += deltaPosX
                     p1.rect.x += deltaPosX
 
                 # jogador 2, se move com as setas
                 if event.key == pygame.K_LEFT:  # seta da esquerda para esquerda
+                    if p2.speedX >= 0.1:
+                        p2.speedX = 0
                     p2.speedX -= deltaPosX
                     p2.rect.x -= deltaPosX
 
                 if event.key == pygame.K_RIGHT:  # seta da direita para direita
+                    if p2.speedX <= -0.1:
+                        p2.speedX = 0
                     p2.speedX += deltaPosX
                     p2.rect.x += deltaPosX
 
